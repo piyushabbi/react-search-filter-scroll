@@ -48,10 +48,9 @@ class App extends Component {
   selectChangeHandler = (e) => {
     this.setState({
       sortByValue: e.target.value
-    });
-    setTimeout(() => {
+    }, () => {
       this.sortHandler(this.state.sortByValue);
-    })    
+    });
   }
   
   render() {
