@@ -74,11 +74,15 @@ class App extends Component {
         </div>
         <div className="row">
           {/* Start: Search Results */}
-          {this.state.searchText === "" ? <p className="">
-              Enter search text.
-            </p> : this.state.data.length > 0 ? this.state.data.map(m => (
-              <Card key={m["s.no"]} data={m} />
-            )) : <p className="">No Match Found!</p>}
+          {
+            this.state.searchText === "" 
+            ? <p className="">Enter search text.</p>
+            : this.state.data.length > 0 
+              ? this.state.data.map(m => (
+                  <Card key={m["s.no"]} data={m} />
+                )) 
+              : <p className="">No Match Found!</p>
+          }
           {/* End: Search Results */}
         </div>
       </div>;
