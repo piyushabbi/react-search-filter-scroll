@@ -14,10 +14,12 @@ const Card = ({data}) => {
             <div style={{textTransform: 'uppercase'}}>
               Amount: {data.currency} {data["amt.pledged"]}
             </div>
+            <div>Percentage Funded: {data["percentage.funded"]}</div>
             <div>
               End Time: { moment(data["end.time"]).format('DD/MM/YYYY') }
             </div>
             <div>Location: {data.location}, {data.state}</div>
+            <div>Percentage Funded: {data["percentage.funded"]}</div>
           </div>
         </div>
       </div>

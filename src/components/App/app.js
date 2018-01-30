@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment';
 
 import Card from '../Card/card';
 
@@ -24,10 +25,10 @@ class App extends Component {
       this.setState({ data });
     });
   }
-  
+
   inputChangeHandler = e => {
     this.setState({ searchText: e.target.value });
-    
+
     let debounced = _.debounce(this.requestHandler, 250, { maxWait: 1000 });
     //this.requestHandler();
     debounced()
@@ -37,9 +38,25 @@ class App extends Component {
       case 'title': {
         const data = this.state.data;
         let sortedData = data.sort((a, b) => a.title > b.title);
-        this.setState(prevState => {
-          return [...prevState.data, ...sortedData];
-        });
+        this.setState({
+          data: sortedData
+        })
+        break;
+      }
+      case 'endDate': {
+        const data = this.state.data;
+        let sortedData = data.sort((a, b) => moment.utc(a["end.time"]).diff(moment.utc(b["end.time"])));
+        this.setState({
+          data: sortedData
+        })
+        break;
+      }
+      case 'percentageFunded': {
+        const data = this.state.data;
+        let sortedData = data.sort((a, b) => a["percentage.funded"] - b["percentage.funded"]);
+        this.setState({
+          data: sortedData
+        })
         break;
       }
       default: break;
@@ -52,7 +69,7 @@ class App extends Component {
       this.sortHandler(this.state.sortByValue);
     });
   }
-  
+
   render() {
     return <div className="container">
         <h1>Products</h1>
@@ -74,12 +91,12 @@ class App extends Component {
         <div className="row">
           {/* Start: Search Results */}
           {
-            this.state.searchText === "" 
+            this.state.searchText === ""
             ? <p className="">Enter search text.</p>
-            : this.state.data.length > 0 
+            : this.state.data.length > 0
               ? this.state.data.map(m => (
                   <Card key={m["s.no"]} data={m} />
-                )) 
+                ))
               : <p className="">No Match Found!</p>
           }
           {/* End: Search Results */}
